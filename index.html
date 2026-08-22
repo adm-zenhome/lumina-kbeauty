@@ -42,33 +42,47 @@
       background: linear-gradient(135deg, #C5A059 0%, #DFCA9E 50%, #B89249 100%);
     }
     .luxury-shadow {
-      box-shadow: 0 25px 50px -12px rgba(26, 23, 21, 0.08), 0 0 0 1px rgba(197, 160, 89, 0.15);
+      box-shadow: 0 20px 40px -10px rgba(26, 23, 21, 0.06), 0 0 0 1px rgba(197, 160, 89, 0.15);
     }
     .luxury-card-hover {
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      will-change: transform;
     }
     .luxury-card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 30px 60px -15px rgba(197, 160, 89, 0.25), 0 0 0 1px rgba(197, 160, 89, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 25px 50px -12px rgba(197, 160, 89, 0.25), 0 0 0 1px rgba(197, 160, 89, 0.4);
     }
     .product-img {
-      transition: transform 0.6s ease;
+      transition: transform 0.4s ease;
+      will-change: transform;
     }
     .luxury-card-hover:hover .product-img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
-    /* Floating Cart Animation */
-    #floatingCart {
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    /* Floating Capsule Animations */
+    #retractedBar {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translate3d(0, 0, 0);
     }
-    #floatingCart.hidden-cart {
-      transform: translateY(120%);
+    #retractedBar.hidden-capsule {
+      transform: translateY(150%);
       opacity: 0;
       pointer-events: none;
     }
+    #hoverDetailCard {
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
+      transform: translateY(8px);
+      opacity: 0;
+    }
+    #hoverDetailCard.active {
+      pointer-events: auto;
+      transform: translateY(0);
+      opacity: 1;
+    }
   </style>
 </head>
-<body class="bg-luxury-cream text-luxury-onyx font-sans antialiased selection:bg-luxury-goldLight selection:text-luxury-onyx pb-48">
+<body class="bg-luxury-cream text-luxury-onyx font-sans antialiased selection:bg-luxury-goldLight selection:text-luxury-onyx pb-44">
 
   <!-- AVISO SUPERIOR EXCLUSIVO -->
   <div class="bg-luxury-emerald text-white text-[11px] md:text-xs py-2.5 px-4 text-center font-medium tracking-widest uppercase border-b border-luxury-gold/30">
@@ -140,11 +154,11 @@
         </div>
       </div>
 
-      <!-- VÍDEO OFICIAL -->
+      <!-- VÍDEO OFICIAL (OTIMIZADO COM PRELOAD METADATA) -->
       <div class="md:col-span-5 relative flex justify-center">
         <div class="w-full max-w-[340px] bg-luxury-onyx rounded-[32px] p-2 shadow-2xl border-2 border-luxury-gold/40 relative">
           <div class="rounded-[26px] overflow-hidden bg-black relative">
-            <video controls autoplay muted loop playsinline class="w-full h-auto aspect-[9/16] object-cover">
+            <video controls preload="metadata" muted loop playsinline class="w-full h-auto aspect-[9/16] object-cover">
               <source src="kbeauty_video.mp4" type="video/mp4">
               Seu navegador não suporta a reprodução deste vídeo.
             </video>
@@ -213,7 +227,7 @@
       <div class="text-center max-w-2xl mx-auto mb-16">
         <span class="text-xs uppercase font-bold tracking-[0.3em] text-luxury-goldDark">Monte sua Rotina Personalizada</span>
         <h2 class="font-serif text-3xl md:text-5xl font-bold text-luxury-onyx mt-2">Escolha seus Produtos</h2>
-        <p class="text-luxury-charcoal/70 text-sm md:text-base mt-3">Valores com o <strong>Cupom 5INSTA já calculado</strong>. Selecione múltiplos produtos ou kits e peça no WhatsApp.</p>
+        <p class="text-luxury-charcoal/70 text-sm md:text-base mt-3">Valores com o <strong>Cupom 5INSTA já calculado</strong>. Selecione múltiplos produtos ou kits e acompanhe na cápsula inferior.</p>
       </div>
 
       <!-- CARDS DE PRODUTOS GRID (3 COLUNAS) -->
@@ -226,7 +240,7 @@
           </div>
           <div>
             <div class="w-full h-64 rounded-2xl overflow-hidden mb-5 bg-white border border-luxury-sand/40">
-              <img src="assets/medicube_pdrn_studio.jpg" alt="Medicube PDRN Pink Collagen Capsule Cream" class="w-full h-full object-cover product-img">
+              <img src="assets/medicube_pdrn_studio.jpg" alt="Medicube PDRN Pink Collagen Capsule Cream" loading="lazy" class="w-full h-full object-cover product-img">
             </div>
             <div class="flex items-center justify-between">
               <h3 class="font-serif text-xl font-bold text-luxury-onyx">Medicube Creme PDRN</h3>
@@ -255,7 +269,7 @@
           </div>
           <div>
             <div class="w-full h-64 rounded-2xl overflow-hidden mb-5 bg-white border border-luxury-sand/40">
-              <img src="assets/numbuzin_9_studio.jpg" alt="Numbuzin Nº 9 Volumetox Eye Cream" class="w-full h-full object-cover product-img">
+              <img src="assets/numbuzin_9_studio.jpg" alt="Numbuzin Nº 9 Volumetox Eye Cream" loading="lazy" class="w-full h-full object-cover product-img">
             </div>
             <div class="flex items-center justify-between">
               <h3 class="font-serif text-xl font-bold text-luxury-onyx">Numbuzin Nº 9</h3>
@@ -284,7 +298,7 @@
           </div>
           <div>
             <div class="w-full h-64 rounded-2xl overflow-hidden mb-5 bg-white border border-luxury-sand/40">
-              <img src="assets/numbuzin_5_studio.jpg" alt="Numbuzin Nº 5+ Glutathione Vitamin Serum" class="w-full h-full object-cover product-img">
+              <img src="assets/numbuzin_5_studio.jpg" alt="Numbuzin Nº 5+ Glutathione Vitamin Serum" loading="lazy" class="w-full h-full object-cover product-img">
             </div>
             <div class="flex items-center justify-between">
               <h3 class="font-serif text-xl font-bold text-luxury-onyx">Numbuzin Nº 5+</h3>
@@ -313,7 +327,7 @@
           </div>
           <div>
             <div class="w-full h-64 rounded-2xl overflow-hidden mb-5 bg-white border border-luxury-sand/40">
-              <img src="assets/celimax_retinal_studio.jpg" alt="Celimax Retinal Shot Tightening Booster" class="w-full h-full object-cover product-img">
+              <img src="assets/celimax_retinal_studio.jpg" alt="Celimax Retinal Shot Tightening Booster" loading="lazy" class="w-full h-full object-cover product-img">
             </div>
             <div class="flex items-center justify-between">
               <h3 class="font-serif text-xl font-bold text-luxury-onyx">Celimax Retinal Shot</h3>
@@ -342,7 +356,7 @@
           </div>
           <div>
             <div class="w-full h-64 rounded-2xl overflow-hidden mb-5 bg-white border border-luxury-sand/40">
-              <img src="assets/anua_heartleaf_studio.jpg" alt="Anua Heartleaf 77% Clear Pad" class="w-full h-full object-cover product-img">
+              <img src="assets/anua_heartleaf_studio.jpg" alt="Anua Heartleaf 77% Clear Pad" loading="lazy" class="w-full h-full object-cover product-img">
             </div>
             <div class="flex items-center justify-between">
               <h3 class="font-serif text-xl font-bold text-luxury-onyx">Anua Heartleaf 77%</h3>
@@ -371,7 +385,7 @@
           </div>
           <div>
             <div class="w-full h-64 rounded-2xl overflow-hidden mb-5 bg-white border border-luxury-sand/40">
-              <img src="assets/medicube_cleanser_studio.jpg" alt="Sabonete Medicube Zero Foam Cleanser" class="w-full h-full object-cover product-img">
+              <img src="assets/medicube_cleanser_studio.jpg" alt="Sabonete Medicube Zero Foam Cleanser" loading="lazy" class="w-full h-full object-cover product-img">
             </div>
             <div class="flex items-center justify-between">
               <h3 class="font-serif text-xl font-bold text-luxury-onyx">Sabonete Zero Foam</h3>
@@ -421,7 +435,7 @@
               <div class="bg-luxury-cream/60 rounded-2xl p-4 my-4 flex items-center justify-around border border-luxury-sand/50">
                 <div class="flex flex-col items-center">
                   <div class="w-24 h-24 flex items-center justify-center bg-white rounded-xl p-0.5 overflow-hidden shadow-sm border border-luxury-sand/40">
-                    <img src="assets/anua_heartleaf_studio.jpg" alt="Anua 77%" class="w-full h-full object-cover rounded-xl">
+                    <img src="assets/anua_heartleaf_studio.jpg" alt="Anua 77%" loading="lazy" class="w-full h-full object-cover rounded-xl">
                   </div>
                   <span class="text-[10px] font-bold text-luxury-onyx mt-2">Anua 77% Pad</span>
                   <span class="text-[10px] text-luxury-charcoal/60">R$ 219 un.</span>
@@ -431,7 +445,7 @@
 
                 <div class="flex flex-col items-center">
                   <div class="w-24 h-24 flex items-center justify-center bg-white rounded-xl p-0.5 overflow-hidden shadow-sm border border-luxury-sand/40">
-                    <img src="assets/numbuzin_5_studio.jpg" alt="Numbuzin 5+" class="w-full h-full object-cover rounded-xl">
+                    <img src="assets/numbuzin_5_studio.jpg" alt="Numbuzin 5+" loading="lazy" class="w-full h-full object-cover rounded-xl">
                   </div>
                   <span class="text-[10px] font-bold text-luxury-onyx mt-2">Numbuzin Nº 5+</span>
                   <span class="text-[10px] text-luxury-charcoal/60">R$ 219 un.</span>
@@ -469,7 +483,7 @@
               <div class="bg-luxury-cream/60 rounded-2xl p-4 my-4 flex items-center justify-around border border-luxury-sand/50">
                 <div class="flex flex-col items-center">
                   <div class="w-24 h-24 flex items-center justify-center bg-white rounded-xl p-0.5 overflow-hidden shadow-sm border border-luxury-sand/40">
-                    <img src="assets/medicube_cleanser_studio.jpg" alt="Medicube Cleanser" class="w-full h-full object-cover rounded-xl">
+                    <img src="assets/medicube_cleanser_studio.jpg" alt="Medicube Cleanser" loading="lazy" class="w-full h-full object-cover rounded-xl">
                   </div>
                   <span class="text-[10px] font-bold text-luxury-onyx mt-2">Zero Foam 120g</span>
                   <span class="text-[10px] text-luxury-charcoal/60">R$ 179 un.</span>
@@ -479,7 +493,7 @@
 
                 <div class="flex flex-col items-center">
                   <div class="w-24 h-24 flex items-center justify-center bg-white rounded-xl p-0.5 overflow-hidden shadow-sm border border-luxury-sand/40">
-                    <img src="assets/medicube_pdrn_studio.jpg" alt="Medicube PDRN" class="w-full h-full object-cover rounded-xl">
+                    <img src="assets/medicube_pdrn_studio.jpg" alt="Medicube PDRN" loading="lazy" class="w-full h-full object-cover rounded-xl">
                   </div>
                   <span class="text-[10px] font-bold text-luxury-onyx mt-2">Creme PDRN 55g</span>
                   <span class="text-[10px] text-luxury-charcoal/60">R$ 219 un.</span>
@@ -517,7 +531,7 @@
               <div class="bg-luxury-cream/60 rounded-2xl p-4 my-4 flex items-center justify-around border border-luxury-sand/50">
                 <div class="flex flex-col items-center">
                   <div class="w-24 h-24 flex items-center justify-center bg-white rounded-xl p-0.5 overflow-hidden shadow-sm border border-luxury-sand/40">
-                    <img src="assets/numbuzin_9_studio.jpg" alt="Numbuzin 9" class="w-full h-full object-cover rounded-xl">
+                    <img src="assets/numbuzin_9_studio.jpg" alt="Numbuzin 9" loading="lazy" class="w-full h-full object-cover rounded-xl">
                   </div>
                   <span class="text-[10px] font-bold text-luxury-onyx mt-2">Numbuzin Nº 9</span>
                   <span class="text-[10px] text-luxury-charcoal/60">R$ 219 un.</span>
@@ -527,7 +541,7 @@
 
                 <div class="flex flex-col items-center">
                   <div class="w-24 h-24 flex items-center justify-center bg-white rounded-xl p-0.5 overflow-hidden shadow-sm border border-luxury-sand/40">
-                    <img src="assets/celimax_retinal_studio.jpg" alt="Celimax Retinal" class="w-full h-full object-cover rounded-xl">
+                    <img src="assets/celimax_retinal_studio.jpg" alt="Celimax Retinal" loading="lazy" class="w-full h-full object-cover rounded-xl">
                   </div>
                   <span class="text-[10px] font-bold text-luxury-onyx mt-2">Retinal Shot</span>
                   <span class="text-[10px] text-luxury-charcoal/60">R$ 189 un.</span>
@@ -565,7 +579,7 @@
               <div class="bg-white rounded-2xl p-4 my-4 flex items-center justify-around border border-luxury-gold/40 shadow-inner">
                 <div class="flex flex-col items-center">
                   <div class="w-24 h-24 flex items-center justify-center bg-luxury-cream rounded-xl p-0.5 overflow-hidden shadow-sm border border-luxury-sand/40">
-                    <img src="assets/medicube_booster_studio.jpg" alt="Mini Booster Pro" class="w-full h-full object-cover rounded-xl">
+                    <img src="assets/medicube_booster_studio.jpg" alt="Mini Booster Pro" loading="lazy" class="w-full h-full object-cover rounded-xl">
                   </div>
                   <span class="text-[10px] font-bold text-luxury-onyx mt-2">Booster Pro</span>
                   <span class="text-[10px] text-luxury-charcoal/60">R$ 1.100 un.</span>
@@ -575,7 +589,7 @@
 
                 <div class="flex flex-col items-center">
                   <div class="w-24 h-24 flex items-center justify-center bg-luxury-cream rounded-xl p-0.5 overflow-hidden shadow-sm border border-luxury-sand/40">
-                    <img src="assets/medicube_pdrn_studio.jpg" alt="Medicube PDRN" class="w-full h-full object-cover rounded-xl">
+                    <img src="assets/medicube_pdrn_studio.jpg" alt="Medicube PDRN" loading="lazy" class="w-full h-full object-cover rounded-xl">
                   </div>
                   <span class="text-[10px] font-bold text-luxury-onyx mt-2">Creme PDRN</span>
                   <span class="text-[10px] text-luxury-charcoal/60">R$ 219 un.</span>
@@ -779,48 +793,47 @@
     </div>
   </section>
 
-  <!-- BARRA FLUTUANTE INFERIOR: CARRINHO INTERATIVO (QUANDO HOUVER ITENS) -->
-  <div id="floatingCart" class="fixed bottom-16 md:bottom-16 left-4 right-4 max-w-5xl mx-auto bg-luxury-onyx/95 backdrop-blur-xl text-white p-4 md:p-5 rounded-3xl border-2 border-luxury-gold shadow-2xl z-50 hidden-cart">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-      
-      <!-- ESQUERDA: ÍCONES DOS PRODUTOS SELECIONADOS -->
-      <div class="flex items-center gap-3 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-        <div class="flex items-center -space-x-2" id="cartThumbnails">
-          <!-- JS injects small circular/rounded images of selected products here -->
-        </div>
-        <div class="border-l border-white/20 pl-3">
-          <span class="text-xs font-bold text-luxury-goldLight block" id="cartItemCount">0 produtos na lista</span>
-          <span class="text-[11px] text-white/60">Frete Grátis SJC e Litoral Norte</span>
-        </div>
-      </div>
-
-      <!-- DIREITA: VALORES SOMADOS E BOTÃO WHATSAPP -->
-      <div class="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
-        <div class="text-left md:text-right">
-          <div class="text-[11px] text-white/60 flex items-center gap-1.5 justify-start md:justify-end">
-            <span class="bg-luxury-gold/20 text-luxury-goldLight text-[10px] font-mono font-bold px-1.5 py-0.5 rounded">Cupom 5INSTA Aplicado</span>
-          </div>
-          <div class="text-2xl font-extrabold text-luxury-goldLight tracking-tight" id="cartTotal">
-            R$ 0,00
-          </div>
-        </div>
-
-        <button onclick="sendOrderToWhatsApp()" class="gold-gradient text-luxury-onyx font-extrabold text-xs md:text-sm uppercase tracking-wider px-6 md:px-8 py-3.5 rounded-2xl shadow-xl hover:shadow-2xl transition transform active:scale-95 border border-luxury-gold flex items-center gap-2 shrink-0">
-          <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.316 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.818-.981z"/></svg>
-          <span>Pedir Lista no WhatsApp</span>
-        </button>
-      </div>
-
+  <!-- POPOVER FLUTUANTE DE DETALHES AO PASSAR O MOUSE NO ÍCONE RETRAÍDO -->
+  <div id="hoverDetailCard" class="fixed bottom-32 right-4 sm:right-6 md:right-8 w-80 sm:w-96 bg-luxury-onyx/95 backdrop-blur-2xl text-white p-5 rounded-3xl border-2 border-luxury-gold shadow-2xl z-50">
+    <div id="hoverDetailContent">
+      <!-- Conteúdo dinâmico injetado via JS -->
     </div>
   </div>
 
+  <!-- CÁPSULA FLUTUANTE RETRAÍDA (INICIA COMPACTA E ULTRA RÁPIDA) -->
+  <div id="retractedBar" class="fixed bottom-14 md:bottom-14 right-4 sm:right-6 md:right-8 z-50 bg-luxury-onyx/95 backdrop-blur-xl text-white pl-4 pr-3 py-2.5 rounded-full border-2 border-luxury-gold shadow-2xl flex items-center gap-3 hidden-capsule">
+    
+    <!-- MINIATURAS INTERATIVAS RETRAÍDAS COM HOVER ENRIQUECIDO -->
+    <div class="flex items-center -space-x-2.5" id="cartThumbnails" onmouseleave="hideHoverDetails()">
+      <!-- Ícones dos produtos injetados aqui -->
+    </div>
+
+    <!-- INFORMAÇÃO RÁPIDA DE ITENS E VALOR TOTAL -->
+    <div class="border-l border-white/20 pl-3 pr-1 text-left cursor-pointer" onclick="sendOrderToWhatsApp()">
+      <div class="text-[10px] text-white/60 flex items-center gap-1">
+        <span id="cartItemCount">0 itens</span>
+        <span class="text-luxury-goldLight">• 5INSTA</span>
+      </div>
+      <div class="text-base sm:text-lg font-extrabold text-luxury-goldLight leading-tight" id="cartTotal">
+        R$ 0,00
+      </div>
+    </div>
+
+    <!-- BOTÃO COMPACTO WHATSAPP -->
+    <button onclick="sendOrderToWhatsApp()" class="gold-gradient hover:brightness-110 text-luxury-onyx font-black text-xs uppercase tracking-wider px-4 py-2.5 rounded-full shadow-lg transition transform active:scale-95 border border-luxury-gold flex items-center gap-1.5 shrink-0">
+      <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.316 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.818-.981z"/></svg>
+      <span>Pedir</span>
+    </button>
+
+  </div>
+
   <!-- BANNER FIXO INFERIOR DE PONTA A PONTA: SEJA UMA REVENDEDORA / B2B -->
-  <aside class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-luxury-emeraldDark via-luxury-emerald to-luxury-emeraldDark text-white py-3 px-4 md:px-8 border-t-2 border-luxury-gold/70 shadow-[0_-10px_25px_rgba(0,0,0,0.35)] backdrop-blur-md">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+  <aside class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-luxury-emeraldDark via-luxury-emerald to-luxury-emeraldDark text-white py-2.5 px-4 md:px-8 border-t-2 border-luxury-gold/70 shadow-[0_-10px_25px_rgba(0,0,0,0.35)] backdrop-blur-md">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
       
       <!-- TEXTO CHAMATIVO B2B -->
-      <div class="flex items-center gap-3 text-center sm:text-left">
-        <div class="w-9 h-9 rounded-full gold-gradient text-luxury-onyx font-extrabold flex items-center justify-center shrink-0 text-sm shadow-md">
+      <div class="flex items-center gap-2.5 text-center sm:text-left">
+        <div class="w-8 h-8 rounded-full gold-gradient text-luxury-onyx font-extrabold flex items-center justify-center shrink-0 text-xs shadow-md">
           💼
         </div>
         <div>
@@ -828,14 +841,14 @@
             <span class="text-xs md:text-sm font-extrabold uppercase tracking-wider text-luxury-goldLight font-serif">Seja uma Revendedora Oficial Lumina</span>
             <span class="bg-rose-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full animate-pulse tracking-widest">Atacado B2B</span>
           </div>
-          <p class="text-[11px] md:text-xs text-luxury-sand/90 font-light mt-0.5">
+          <p class="text-[10px] md:text-xs text-luxury-sand/90 font-light">
             Margens de até <strong class="text-white font-bold">60% de lucro</strong> • Pronta entrega para <strong>Clínicas de Estética, Médicas e Revenda</strong>.
           </p>
         </div>
       </div>
 
       <!-- BOTÃO CTA DE REVENDEDORA -->
-      <a href="https://wa.me/5511959255668?text=Ol%C3%A1!%20Gostaria%20de%20informa%C3%A7%C3%B5es%20e%20da%20tabela%20de%20atacado%20para%20ser%20uma%20Revendedora%20Oficial%20LUMINA!" target="_blank" class="w-full sm:w-auto text-center gold-gradient hover:brightness-110 text-luxury-onyx font-extrabold text-xs uppercase tracking-wider px-6 py-2.5 rounded-full shadow-lg transition transform active:scale-95 border border-luxury-gold flex items-center justify-center gap-2 shrink-0">
+      <a href="https://wa.me/5511959255668?text=Ol%C3%A1!%20Gostaria%20de%20informa%C3%A7%C3%B5es%20e%20da%20tabela%20de%20atacado%20para%20ser%20uma%20Revendedora%20Oficial%20LUMINA!" target="_blank" class="w-full sm:w-auto text-center gold-gradient hover:brightness-110 text-luxury-onyx font-extrabold text-xs uppercase tracking-wider px-5 py-2 rounded-full shadow-lg transition transform active:scale-95 border border-luxury-gold flex items-center justify-center gap-1.5 shrink-0">
         <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.316 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.818-.981z"/></svg>
         <span>Quero ser Revendedora no WhatsApp</span>
       </a>
@@ -843,96 +856,140 @@
     </div>
   </aside>
 
-  <!-- JAVASCRIPT DO CARRINHO INTERATIVO COM CUPOM 5INSTA -->
+  <!-- JAVASCRIPT DO CARRINHO RETRAÍDO & HOVER ENRIQUECIDO -->
   <script>
     const PHONE_NUMBER = "5511959255668";
 
-    // Produtos Individuais (preço cheio base)
+    // Catálogo Enriquecido com Áreas, Tempo de Ação, Idioma, Visualizações e Quantidades
     const PRODUCTS = {
       'medicube_pdrn': {
         id: 'medicube_pdrn',
         name: 'Medicube Creme PDRN (55g)',
         price: 219,
         discountPrice: 208.05,
-        img: 'assets/medicube_pdrn_studio.jpg'
+        img: 'assets/medicube_pdrn_studio.jpg',
+        viewsTotal: 184,
+        tempoUso: 'Uso Noturno / Resultados em 7 dias',
+        idioma: '🇰🇷 Coreano (Seul) • Guia em PT-BR',
+        areas: 'Rosto, Linhas e Colo'
       },
       'numbuzin_9': {
         id: 'numbuzin_9',
         name: 'Numbuzin Nº 9 Volumetox (Seringa)',
         price: 219,
         discountPrice: 208.05,
-        img: 'assets/numbuzin_9_studio.jpg'
+        img: 'assets/numbuzin_9_studio.jpg',
+        viewsTotal: 231,
+        tempoUso: 'Manhã e Noite / Efeito Tensor Imediato',
+        idioma: '🇰🇷 Coreano (Seul) • Guia em PT-BR',
+        areas: 'Contorno dos Olhos, Bigode Chinês e Testa'
       },
       'numbuzin_5': {
         id: 'numbuzin_5',
-        name: 'Numbuzin Nº 5+ Glutationa',
+        name: 'Numbuzin Nº 5+ Glutationa (30ml)',
         price: 219,
         discountPrice: 208.05,
-        img: 'assets/numbuzin_5_studio.jpg'
+        img: 'assets/numbuzin_5_studio.jpg',
+        viewsTotal: 295,
+        tempoUso: 'Diário Noturno / Clareamento em 14 dias',
+        idioma: '🇰🇷 Coreano (Seul) • Guia em PT-BR',
+        areas: 'Manchas de Sol, Melasma e Marcas Escuras'
       },
       'celimax_retinal': {
         id: 'celimax_retinal',
         name: 'Celimax Retinal Shot (15ml)',
         price: 189,
         discountPrice: 179.55,
-        img: 'assets/celimax_retinal_studio.jpg'
+        img: 'assets/celimax_retinal_studio.jpg',
+        viewsTotal: 142,
+        tempoUso: 'Noturno (3x por semana) / Ação 11x rápida',
+        idioma: '🇰🇷 Coreano (Seul) • Guia em PT-BR',
+        areas: 'Rosto Completo e Textura Irregular'
       },
       'anua_77': {
         id: 'anua_77',
         name: 'Anua Heartleaf 77% Clear Pad',
         price: 219,
         discountPrice: 208.05,
-        img: 'assets/anua_heartleaf_studio.jpg'
+        img: 'assets/anua_heartleaf_studio.jpg',
+        viewsTotal: 176,
+        tempoUso: 'Pós-Limpeza / Alívio e Poros em 5 minutos',
+        idioma: '🇰🇷 Coreano (Seul) • Guia em PT-BR',
+        areas: 'Zona T, Bochechas e Poros Dilatados'
       },
       'medicube_cleanser': {
         id: 'medicube_cleanser',
         name: 'Sabonete Medicube Zero Foam (120g)',
         price: 179,
         discountPrice: 170.05,
-        img: 'assets/medicube_cleanser_studio.jpg'
+        img: 'assets/medicube_cleanser_studio.jpg',
+        viewsTotal: 118,
+        tempoUso: 'Manhã e Noite / Limpeza Clínica Profunda',
+        idioma: '🇰🇷 Coreano (Seul) • Guia em PT-BR',
+        areas: 'Rosto, Poros e Controle de Oleosidade'
       },
       'medicube_booster': {
         id: 'medicube_booster',
         name: 'Medicube Mini Booster Pro',
         price: 1100,
         discountPrice: 1045.00,
-        img: 'assets/medicube_booster_studio.jpg'
+        img: 'assets/medicube_booster_studio.jpg',
+        viewsTotal: 388,
+        tempoUso: 'Sessões de 3 min diárias / Absorção 500x',
+        idioma: '🇰🇷 Coreano • Manual e Carregador USB',
+        areas: 'Face Completa, Contorno Facial e Pescoço'
       }
     };
 
-    // Kits: Cupom 5INSTA aplicado nos kits 1, 2 e 3. Kit 4 (Booster) permanece R$ 1.190,00 fixo.
+    // Kits Estratégicos
     const KITS = {
       'kit_clareamento': {
         id: 'kit_clareamento',
-        name: 'Kit Dupla Clareamento & Calmante (Anua 77% + Numbuzin 5+)',
-        price: 379.05, // 399 * 0.95
+        name: 'Kit Dupla Clareamento & Calmante',
+        price: 379.05,
         originalPrice: 438,
         products: ['anua_77', 'numbuzin_5'],
-        imgs: ['assets/anua_heartleaf_studio.jpg', 'assets/numbuzin_5_studio.jpg']
+        imgs: ['assets/anua_heartleaf_studio.jpg', 'assets/numbuzin_5_studio.jpg'],
+        viewsTotal: 215,
+        tempoUso: 'Rotina Completa Dia/Noite',
+        idioma: '🇰🇷 Lotes Originais Coreanos Lacrados',
+        areas: 'Manchas, Melasma e Textura dos Poros'
       },
       'kit_medicube': {
         id: 'kit_medicube',
-        name: 'Kit Limpeza & Firmeza (Sabonete Zero Foam + Creme PDRN)',
-        price: 341.05, // 359 * 0.95
+        name: 'Kit Limpeza & Firmeza Medicube',
+        price: 341.05,
         originalPrice: 398,
         products: ['medicube_cleanser', 'medicube_pdrn'],
-        imgs: ['assets/medicube_cleanser_studio.jpg', 'assets/medicube_pdrn_studio.jpg']
+        imgs: ['assets/medicube_cleanser_studio.jpg', 'assets/medicube_pdrn_studio.jpg'],
+        viewsTotal: 164,
+        tempoUso: 'Protocolo de Dupla Regeneração',
+        idioma: '🇰🇷 Lotes Originais Coreanos Lacrados',
+        areas: 'Limpeza de Poros + Estímulo de Colágeno'
       },
       'kit_firmeza': {
         id: 'kit_firmeza',
-        name: 'Kit Dupla Firmeza & Renovação (Numbuzin 9 + Celimax Retinal)',
-        price: 350.55, // 369 * 0.95
+        name: 'Kit Dupla Firmeza & Renovação',
+        price: 350.55,
         originalPrice: 408,
         products: ['numbuzin_9', 'celimax_retinal'],
-        imgs: ['assets/numbuzin_9_studio.jpg', 'assets/celimax_retinal_studio.jpg']
+        imgs: ['assets/numbuzin_9_studio.jpg', 'assets/celimax_retinal_studio.jpg'],
+        viewsTotal: 198,
+        tempoUso: 'Tratamento Noturno Anti-Idade Máximo',
+        idioma: '🇰🇷 Lotes Originais Coreanos Lacrados',
+        areas: 'Linhas Profundas, Rugas e Flacidez'
       },
       'kit_tecnologia': {
         id: 'kit_tecnologia',
-        name: 'Super Combo Alta Tecnologia (Mini Booster Pro + Creme PDRN)',
-        price: 1190.00, // SEM CUPOM NO KIT COM BOOSTER (Fixo R$ 1.190,00)
+        name: 'Super Combo Alta Tecnologia',
+        price: 1190.00,
         originalPrice: 1319,
         products: ['medicube_booster', 'medicube_pdrn'],
-        imgs: ['assets/medicube_booster_studio.jpg', 'assets/medicube_pdrn_studio.jpg']
+        imgs: ['assets/medicube_booster_studio.jpg', 'assets/medicube_pdrn_studio.jpg'],
+        viewsTotal: 342,
+        tempoUso: 'Protocolo Clínico Domiciliar Diário',
+        idioma: '🇰🇷 Dispositivo Original + Creme PDRN',
+        areas: 'Absorção Celular 500x no Rosto e Pescoço'
       }
     };
 
@@ -959,11 +1016,13 @@
 
     function removeProduct(productId) {
       delete cart[productId];
+      hideHoverDetails();
       renderCart();
     }
 
     function removeKit(kitId) {
       delete cartKits[kitId];
+      hideHoverDetails();
       renderCart();
     }
 
@@ -971,15 +1030,116 @@
       return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
+    // Hover Popover com Detalhes Ricos de Quantidade, Views, Tempo, Idioma e Áreas
+    function showProductDetails(id) {
+      const p = PRODUCTS[id];
+      const qty = cart[id] || 1;
+      const subtotal = p.discountPrice * qty;
+      const cardEl = document.getElementById('hoverDetailCard');
+      const contentEl = document.getElementById('hoverDetailContent');
+
+      contentEl.innerHTML = `
+        <div class="flex items-start gap-3.5 pb-3 border-b border-white/15">
+          <div class="w-14 h-14 rounded-2xl bg-white p-1 border border-luxury-gold shadow-md shrink-0 overflow-hidden">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover rounded-xl">
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold bg-emerald-900/80 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">Pronta Entrega</span>
+              <span class="text-[10px] text-luxury-goldLight font-bold">Qtd: ${qty}x</span>
+            </div>
+            <h5 class="font-serif font-bold text-sm text-white mt-1 leading-snug">${p.name}</h5>
+            <div class="text-xs font-extrabold text-luxury-goldLight mt-0.5">${formatBRL(subtotal)} <span class="text-[10px] font-normal text-white/60">(5% OFF)</span></div>
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-3 text-[11px]">
+          <div class="flex items-center justify-between text-white/80">
+            <span class="text-white/50">🔥 Visualizações Hoje:</span>
+            <span class="font-bold text-amber-400">${p.viewsTotal} pessoas vendo</span>
+          </div>
+          <div class="flex items-center justify-between text-white/80">
+            <span class="text-white/50">⏱️ Tempo de Uso:</span>
+            <span class="font-semibold text-luxury-sand">${p.tempoUso}</span>
+          </div>
+          <div class="flex items-center justify-between text-white/80">
+            <span class="text-white/50">🌐 Origem & Idioma:</span>
+            <span class="font-semibold text-luxury-sand">${p.idioma}</span>
+          </div>
+          <div class="flex items-start justify-between text-white/80">
+            <span class="text-white/50">📍 Áreas de Ação:</span>
+            <span class="font-semibold text-luxury-goldLight text-right max-w-[170px]">${p.areas}</span>
+          </div>
+        </div>
+      `;
+
+      cardEl.classList.add('active');
+    }
+
+    function showKitDetails(kitId) {
+      const kit = KITS[kitId];
+      const qty = cartKits[kitId] || 1;
+      const subtotal = kit.price * qty;
+      const cardEl = document.getElementById('hoverDetailCard');
+      const contentEl = document.getElementById('hoverDetailContent');
+
+      contentEl.innerHTML = `
+        <div class="flex items-start gap-3.5 pb-3 border-b border-white/15">
+          <div class="flex items-center -space-x-2 shrink-0">
+            <div class="w-12 h-12 rounded-full bg-white p-0.5 border border-luxury-gold overflow-hidden">
+              <img src="${kit.imgs[0]}" class="w-full h-full object-cover">
+            </div>
+            <div class="w-12 h-12 rounded-full bg-white p-0.5 border border-luxury-gold overflow-hidden">
+              <img src="${kit.imgs[1]}" class="w-full h-full object-cover">
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold bg-amber-900/80 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">Kit Promocional</span>
+              <span class="text-[10px] text-luxury-goldLight font-bold">Qtd: ${qty}x</span>
+            </div>
+            <h5 class="font-serif font-bold text-sm text-white mt-1 leading-snug">${kit.name}</h5>
+            <div class="text-xs font-extrabold text-luxury-goldLight mt-0.5">${formatBRL(subtotal)} <span class="text-[10px] font-normal text-white/60">(Frete Grátis)</span></div>
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-3 text-[11px]">
+          <div class="flex items-center justify-between text-white/80">
+            <span class="text-white/50">🔥 Demanda Regional:</span>
+            <span class="font-bold text-amber-400">${kit.viewsTotal} visualizações</span>
+          </div>
+          <div class="flex items-center justify-between text-white/80">
+            <span class="text-white/50">⏱️ Protocolo:</span>
+            <span class="font-semibold text-luxury-sand">${kit.tempoUso}</span>
+          </div>
+          <div class="flex items-center justify-between text-white/80">
+            <span class="text-white/50">🌐 Autenticidade:</span>
+            <span class="font-semibold text-luxury-sand">${kit.idioma}</span>
+          </div>
+          <div class="flex items-start justify-between text-white/80">
+            <span class="text-white/50">📍 Áreas de Ação:</span>
+            <span class="font-semibold text-luxury-goldLight text-right max-w-[170px]">${kit.areas}</span>
+          </div>
+        </div>
+      `;
+
+      cardEl.classList.add('active');
+    }
+
+    function hideHoverDetails() {
+      const cardEl = document.getElementById('hoverDetailCard');
+      if (cardEl) cardEl.classList.remove('active');
+    }
+
     function renderCart() {
       const selectedProductKeys = Object.keys(cart);
       const selectedKitKeys = Object.keys(cartKits);
-      const cartEl = document.getElementById('floatingCart');
+      const retractedBarEl = document.getElementById('retractedBar');
       const thumbnailsEl = document.getElementById('cartThumbnails');
       const itemCountEl = document.getElementById('cartItemCount');
       const totalEl = document.getElementById('cartTotal');
 
-      // Atualiza botões nos cards de produtos individuais
+      // Atualiza botões nos cards de produtos
       Object.keys(PRODUCTS).forEach(id => {
         const btn = document.getElementById(`btn-${id}`);
         const icon = document.getElementById(`icon-${id}`);
@@ -1035,21 +1195,22 @@
         }
       });
 
+      // Se não há itens selecionados, oculta a barra retraída
       if (selectedProductKeys.length === 0 && selectedKitKeys.length === 0) {
-        cartEl.classList.add('hidden-cart');
+        retractedBarEl.classList.add('hidden-capsule');
+        hideHoverDetails();
         return;
       }
 
-      // Mostra a barra inferior
-      cartEl.classList.remove('hidden-cart');
+      // Mostra a cápsula retraída
+      retractedBarEl.classList.remove('hidden-capsule');
 
-      // Calcula valores com cupom 5INSTA
       let totalAmount = 0;
       let totalCount = 0;
 
       thumbnailsEl.innerHTML = '';
 
-      // Renderiza Miniaturas dos Kits
+      // Miniaturas dos Kits com Hover listener
       selectedKitKeys.forEach(kitId => {
         const kit = KITS[kitId];
         const qty = cartKits[kitId];
@@ -1058,25 +1219,25 @@
 
         const kitThumb = document.createElement('div');
         kitThumb.className = 'relative group cursor-pointer flex items-center -space-x-2 mr-1';
-        kitThumb.title = `Clique para remover ${kit.name}`;
+        kitThumb.onmouseenter = () => showKitDetails(kitId);
         kitThumb.onclick = () => removeKit(kitId);
 
         kit.imgs.forEach(imgUrl => {
           const sub = document.createElement('div');
-          sub.className = 'w-11 h-11 rounded-full bg-white p-0.5 border-2 border-luxury-gold shadow-md overflow-hidden flex items-center justify-center transition group-hover:opacity-70';
+          sub.className = 'w-9 h-9 rounded-full bg-white p-0.5 border-2 border-luxury-gold shadow-md overflow-hidden flex items-center justify-center transition group-hover:scale-105';
           sub.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover">`;
           kitThumb.appendChild(sub);
         });
 
         const removeBadge = document.createElement('div');
-        removeBadge.className = 'absolute inset-0 rounded-full bg-red-600/80 text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center transition z-10';
+        removeBadge.className = 'absolute inset-0 rounded-full bg-red-600/80 text-white text-[9px] font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center transition z-10';
         removeBadge.innerText = '✕';
         kitThumb.appendChild(removeBadge);
 
         thumbnailsEl.appendChild(kitThumb);
       });
 
-      // Renderiza Miniaturas dos Produtos Individuais
+      // Miniaturas dos Produtos com Hover listener
       selectedProductKeys.forEach(id => {
         const p = PRODUCTS[id];
         const qty = cart[id];
@@ -1084,20 +1245,20 @@
         totalCount += qty;
 
         const thumb = document.createElement('div');
-        thumb.className = 'relative group cursor-pointer mr-1';
-        thumb.title = `Clique para remover ${p.name}`;
+        thumb.className = 'relative group cursor-pointer mr-0.5';
+        thumb.onmouseenter = () => showProductDetails(id);
         thumb.onclick = () => removeProduct(id);
         thumb.innerHTML = `
-          <div class="w-11 h-11 rounded-full bg-white p-0.5 border-2 border-luxury-gold shadow-md overflow-hidden flex items-center justify-center transition group-hover:opacity-70">
+          <div class="w-9 h-9 rounded-full bg-white p-0.5 border-2 border-luxury-gold shadow-md overflow-hidden flex items-center justify-center transition group-hover:scale-105">
             <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover">
           </div>
-          ${qty > 1 ? `<span class="absolute -top-1 -right-1 bg-luxury-gold text-luxury-onyx text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow">${qty}</span>` : ''}
-          <div class="absolute inset-0 rounded-full bg-red-600/80 text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center transition">✕</div>
+          ${qty > 1 ? `<span class="absolute -top-1 -right-1 bg-luxury-gold text-luxury-onyx text-[8px] font-black w-3.5 h-3.5 rounded-full flex items-center justify-center shadow">${qty}</span>` : ''}
+          <div class="absolute inset-0 rounded-full bg-red-600/80 text-white text-[9px] font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center transition">✕</div>
         `;
         thumbnailsEl.appendChild(thumb);
       });
 
-      itemCountEl.innerText = `${totalCount} ${totalCount === 1 ? 'item selecionado' : 'itens selecionados'}`;
+      itemCountEl.innerText = `${totalCount} ${totalCount === 1 ? 'item' : 'itens'}`;
       totalEl.innerText = formatBRL(totalAmount);
     }
 
@@ -1109,7 +1270,6 @@
       let totalAmount = 0;
       let itemsListText = '';
 
-      // Itens dos Kits
       selectedKitKeys.forEach(kitId => {
         const kit = KITS[kitId];
         const qty = cartKits[kitId];
@@ -1118,7 +1278,6 @@
         itemsListText += `🎁 ${qty}x ${kit.name} — ${formatBRL(kitTotal)}\n`;
       });
 
-      // Itens Avulsos
       selectedProductKeys.forEach(id => {
         const p = PRODUCTS[id];
         const qty = cart[id];
