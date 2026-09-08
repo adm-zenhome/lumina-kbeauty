@@ -1,1 +1,4 @@
 .vercel
+*.mp4
+.env*
+node_modules

@@ -1,0 +1,34 @@
+name: Lumina 24/7 Cloud Sentinel
+
+on:
+  schedule:
+    # Executa a cada 30 minutos na nuvem
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # Permite disparar manualmente a qualquer momento pelo GitHub
+
+jobs:
+  patrol:
+    name: Ronda do Sentinela Lumina
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Código
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Dependências
+        run: pip install requests
+
+      - name: Executar Ronda do Sentinela
+        env:
+          MERCADO_LIVRE_CLIENT_ID: ${{ secrets.MERCADO_LIVRE_CLIENT_ID }}
+          MERCADO_LIVRE_CLIENT_SECRET: ${{ secrets.MERCADO_LIVRE_CLIENT_SECRET }}
+          MERCADO_LIVRE_ACCESS_TOKEN: ${{ secrets.MERCADO_LIVRE_ACCESS_TOKEN }}
+          MERCADO_LIVRE_REFRESH_TOKEN: ${{ secrets.MERCADO_LIVRE_REFRESH_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN || '7734494805:AAEybSrLc5O3z0sJCgNYaggcc7EdUIAf1-Q' }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '856670142' }}
+        run: |
+          python3 scripts/lumina_cloud_sentinel.py --run-once
