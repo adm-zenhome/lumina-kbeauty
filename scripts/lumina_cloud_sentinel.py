@@ -373,9 +373,9 @@ def format_payment_breakdown(order: dict, item_info: dict) -> dict:
     if sale_fee == 0.0:
         sale_fee = total_amount * 0.17
 
-    # Frete real confirmado: R$ 25,45 (ML cobre 50% do R$ 50,90)
-    # Nota: quando reputação subir para Verde, ML pode cobrir ainda mais
-    shipping_cost = 25.45
+    # Frete Premium confirmado: R$ 50,90 (Mercado Envios — anúncio Premium obriga frete grátis ao comprador)
+    # Atualizado em 08/09/2026 após mudança de Super Combo e Booster Solo para Premium
+    shipping_cost = 50.90
     
     # "Você recebe" = total - taxa - frete (conforme Resumo de Custos do ML)
     you_receive = total_amount - sale_fee - shipping_cost
@@ -511,7 +511,7 @@ def process_paid_orders(token: str, dry_run: bool = False):
                         "📊 <b>RESUMO DE CUSTOS (= Painel do Mercado Livre):</b>\n"
                         f"💵 <b>Preço:</b>  R$ {fin['total_amount']:,.2f}\n"
                         f"➖ <b>Tarifa de venda (Premium 17%):</b>  -R$ {fin['sale_fee']:,.2f}\n"
-                        f"➖ <b>Custo de envio (ML cobre 50%):</b>  -R$ {fin['shipping_cost']:,.2f}\n"
+                        f"➖ <b>Custo de envio (Mercado Envios Premium):</b>  -R$ {fin['shipping_cost']:,.2f}\n"
                         "──────────────────────\n"
                         f"🟢 <b>Você recebe:</b>  <b>R$ {fin['you_receive']:,.2f}</b>\n"
                         "──────────────────────\n"
