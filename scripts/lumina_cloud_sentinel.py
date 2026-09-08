@@ -3,6 +3,11 @@
 lumina_cloud_sentinel.py — Sentinela Digital em Nuvem (Ji-woo 24/7)
 Monitora perguntas, novas compras e envia notificações executivas no Telegram.
 Roda a cada 30 minutos na nuvem (GitHub Actions / Vercel / Cron).
+
+Taxas Reais Confirmadas (Central de Vendedores ML — 08/09/2026):
+  - Tarifa Anúncio Premium: 17.0% (ex: R$237,83 em R$1.399)
+  - Custo Frete Mercado Envios: R$25,45 (ML cobre 50% do R$50,90 original)
+  - Você recebe (bruto pós-taxas): R$1.135,72 no Super Combo
 """
 
 import os
@@ -357,25 +362,30 @@ def format_payment_breakdown(order: dict, item_info: dict) -> dict:
             pay_method = "Saldo Mercado Pago"
             pay_type = "Saldo"
 
-    # Quebra de custos
+    # Quebra de custos reais (confirmados no painel ML em 08/09/2026)
     items = order.get("order_items", [])
     sale_fee = 0.0
     for it in items:
         sale_fee += float(it.get("sale_fee", 0.0))
     
-    # Se a API não trouxer a taxa preenchida (ex: simulação), calcula 14%
+    # Se a API não trouxer a taxa preenchida (ex: simulação), usa 17% real do Premium
+    # Confirmado: R$ 237,83 sobre R$ 1.399,00 = 17.0% (Anúncio Premium)
     if sale_fee == 0.0:
-        sale_fee = total_amount * 0.14
-        
-    shipping_cost = 38.90  # Estimativa média Mercado Envios com frete grátis
+        sale_fee = total_amount * 0.17
+
+    # Frete real confirmado: R$ 25,45 (ML cobre 50% do R$ 50,90)
+    # Nota: quando reputação subir para Verde, ML pode cobrir ainda mais
+    shipping_cost = 25.45
     
-    # CMV (Custo da Mercadoria Vendida)
-    # Lucro tabelado na precificação blindada
+    # "Você recebe" = total - taxa - frete (conforme Resumo de Custos do ML)
+    you_receive = total_amount - sale_fee - shipping_cost
+
+    # CMV (Custo da Mercadoria Vendida) = tabelado na precificação blindada
     expected_profit = item_info.get("profit", total_amount * 0.25)
-    cmv = total_amount - sale_fee - shipping_cost - expected_profit
+    cmv = you_receive - expected_profit
     if cmv < 0:
-        cmv = total_amount * 0.45
-        expected_profit = total_amount - sale_fee - shipping_cost - cmv
+        cmv = you_receive * 0.60
+        expected_profit = you_receive - cmv
 
     margin_pct = (expected_profit / total_amount * 100) if total_amount > 0 else 0
 
@@ -386,6 +396,7 @@ def format_payment_breakdown(order: dict, item_info: dict) -> dict:
         "installments": installments,
         "sale_fee": sale_fee,
         "shipping_cost": shipping_cost,
+        "you_receive": you_receive,
         "cmv": cmv,
         "profit": expected_profit,
         "margin_pct": margin_pct
@@ -489,7 +500,7 @@ def process_paid_orders(token: str, dry_run: bool = False):
                         except Exception:
                             pass
 
-                    # Notificação com Raio-X Financeiro Quebrado
+                    # Notificação com Raio-X Financeiro Quebrado (idêntico ao painel ML)
                     tg_msg = (
                         "🎉 <b>NOVA VENDA CONFIRMADA NO MERCADO LIVRE!</b> 🚀\n"
                         "━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -497,14 +508,17 @@ def process_paid_orders(token: str, dry_run: bool = False):
                         f"🆔 <b>Pedido:</b> #{order_id}\n"
                         f"👤 <b>Comprador(a):</b> {buyer_name}\n"
                         f"💳 <b>Forma de Pagamento:</b> {fin['pay_method']}\n\n"
-                        "📊 <b>RAIO-X FINANCEIRO (DRE DO PEDIDO):</b>\n"
-                        f"💵 <b>Valor Bruto Pago:</b> R$ {fin['total_amount']:,.2f}\n"
-                        f"➖ <b>Taxa Mercado Livre:</b> -R$ {fin['sale_fee']:,.2f}\n"
-                        f"➖ <b>Frete Mercado Envios:</b> -R$ {fin['shipping_cost']:,.2f}\n"
-                        f"➖ <b>Custo Produto (CMV):</b> -R$ {fin['cmv']:,.2f}\n"
+                        "📊 <b>RESUMO DE CUSTOS (= Painel do Mercado Livre):</b>\n"
+                        f"💵 <b>Preço:</b>  R$ {fin['total_amount']:,.2f}\n"
+                        f"➖ <b>Tarifa de venda (Premium 17%):</b>  -R$ {fin['sale_fee']:,.2f}\n"
+                        f"➖ <b>Custo de envio (ML cobre 50%):</b>  -R$ {fin['shipping_cost']:,.2f}\n"
                         "──────────────────────\n"
-                        f"💰 <b>LUCRO LÍQUIDO REAL:</b> <b>+R$ {fin['profit']:,.2f}</b>\n"
-                        f"📈 <b>Margem Líquida Blindada:</b> <b>{fin['margin_pct']:.1f}%</b>\n"
+                        f"🟢 <b>Você recebe:</b>  <b>R$ {fin['you_receive']:,.2f}</b>\n"
+                        "──────────────────────\n"
+                        f"➖ <b>Custo do Produto (CMV):</b>  -R$ {fin['cmv']:,.2f}\n"
+                        "━━━━━━━━━━━━━━━━━━━━━━\n"
+                        f"💰 <b>LUCRO LÍQUIDO NO BOLSO:</b>  <b>+R$ {fin['profit']:,.2f}</b>\n"
+                        f"📈 <b>Margem sobre o preço de venda:</b>  <b>{fin['margin_pct']:.1f}%</b>\n"
                         "━━━━━━━━━━━━━━━━━━━━━━\n"
                         "✅ <i>Mensagem pós-venda VIP e E-book de 100 páginas enviados automaticamente!</i>"
                     )
@@ -590,14 +604,17 @@ def test_function_order():
         f"🆔 <b>Pedido:</b> #{mock_order_id}\n"
         f"👤 <b>Comprador(a):</b> {mock_buyer} (São Paulo, SP)\n"
         f"💳 <b>Forma de Pagamento:</b> {fin['pay_method']}\n\n"
-        "📊 <b>RAIO-X FINANCEIRO (DRE DO PEDIDO):</b>\n"
-        f"💵 <b>Valor Bruto Pago:</b> R$ {fin['total_amount']:,.2f}\n"
-        f"➖ <b>Taxa Mercado Livre (14%):</b> -R$ {fin['sale_fee']:,.2f}\n"
-        f"➖ <b>Frete Mercado Envios:</b> -R$ {fin['shipping_cost']:,.2f}\n"
-        f"➖ <b>Custo Produto (CMV):</b> -R$ {fin['cmv']:,.2f}\n"
+        "📊 <b>RESUMO DE CUSTOS (= Painel do Mercado Livre):</b>\n"
+        f"💵 <b>Preço:</b>  R$ {fin['total_amount']:,.2f}\n"
+        f"➖ <b>Tarifa de venda (Premium 17%):</b>  -R$ {fin['sale_fee']:,.2f}\n"
+        f"➖ <b>Custo de envio (ML cobre 50%):</b>  -R$ {fin['shipping_cost']:,.2f}\n"
         "──────────────────────\n"
-        f"💰 <b>LUCRO LÍQUIDO REAL:</b> <b>+R$ {fin['profit']:,.2f}</b>\n"
-        f"📈 <b>Margem Líquida Blindada:</b> <b>{fin['margin_pct']:.1f}%</b>\n"
+        f"🟢 <b>Você recebe:</b>  <b>R$ {fin['you_receive']:,.2f}</b>\n"
+        "──────────────────────\n"
+        f"➖ <b>Custo do Produto (CMV):</b>  -R$ {fin['cmv']:,.2f}\n"
+        "━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"💰 <b>LUCRO LÍQUIDO NO BOLSO:</b>  <b>+R$ {fin['profit']:,.2f}</b>\n"
+        f"📈 <b>Margem sobre o preço de venda:</b>  <b>{fin['margin_pct']:.1f}%</b>\n"
         "━━━━━━━━━━━━━━━━━━━━━━\n"
         "✅ <i>Mensagem pós-venda VIP e link do E-book de 100 páginas enviados automaticamente!</i>"
     )
