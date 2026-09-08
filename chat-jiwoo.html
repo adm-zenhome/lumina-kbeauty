@@ -10,11 +10,11 @@
     body { background-color: #0b141a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     .chat-bg {
       background-color: #0b141a;
-      background-image: radial-gradient(#1f2c34 1px, transparent 1px);
+      background-image: radial-gradient(#1f2c34 1.2px, transparent 1.2px);
       background-size: 20px 20px;
     }
-    .bubble-in { background-color: #202c33; border-top-left-radius: 0px; }
-    .bubble-out { background-color: #005c4b; border-top-right-radius: 0px; }
+    .bubble-in { background-color: #202c33; border-top-left-radius: 4px; }
+    .bubble-out { background-color: #005c4b; border-top-right-radius: 4px; }
   </style>
 </head>
 <body class="h-screen flex flex-col justify-between max-w-md mx-auto shadow-2xl border-x border-neutral-800">
@@ -43,7 +43,6 @@
 
   <!-- ÁREA DE MENSAGENS -->
   <main id="chatArea" class="flex-1 chat-bg overflow-y-auto p-4 space-y-3">
-    <!-- AVISO CRIPTOGRAFIA -->
     <div class="text-center my-2">
       <span class="bg-[#182229] text-amber-200/80 text-[11px] px-3 py-1.5 rounded-lg inline-block shadow-sm">
         🔒 Canal Direto de Atendimento VIP Lumina K-Beauty
@@ -53,10 +52,10 @@
 
   <!-- SUGESTÕES RÁPIDAS -->
   <div class="bg-[#202c33]/90 px-3 py-2 border-t border-neutral-800 flex gap-2 overflow-x-auto text-xs whitespace-nowrap text-neutral-300">
-    <button onclick="quickSend('Olá! Montei minha rotina no site e gostaria de encomendar com 5INSTA: Super Combo')" class="bg-[#111b21] hover:bg-neutral-700 px-3 py-1.5 rounded-full border border-neutral-700">🛒 Enviar Pedido do Site</button>
     <button onclick="quickSend('Minha principal queixa são manchas de melasma')" class="bg-[#111b21] hover:bg-neutral-700 px-3 py-1.5 rounded-full border border-neutral-700">🌸 Tenho Melasma</button>
-    <button onclick="quickSend('É original mesmo? Tem taxa na alfândega?')" class="bg-[#111b21] hover:bg-neutral-700 px-3 py-1.5 rounded-full border border-neutral-700">🛡️ É original? Taxa?</button>
-    <button onclick="quickSend('Pode me mandar a chave PIX?')" class="bg-[#111b21] hover:bg-neutral-700 px-3 py-1.5 rounded-full border border-neutral-700">🔑 Chave PIX</button>
+    <button onclick="quickSend('Tenho poros dilatados e pele oleosa')" class="bg-[#111b21] hover:bg-neutral-700 px-3 py-1.5 rounded-full border border-neutral-700">✨ Poros & Oleosidade</button>
+    <button onclick="quickSend('É original mesmo? Não corre risco de taxa na alfândega?')" class="bg-[#111b21] hover:bg-neutral-700 px-3 py-1.5 rounded-full border border-neutral-700">🛡️ Original? Tem taxa?</button>
+    <button onclick="quickSend('Como funciona o Medicube Booster Pro?')" class="bg-[#111b21] hover:bg-neutral-700 px-3 py-1.5 rounded-full border border-neutral-700">⚡ Medicube Booster Pro</button>
   </div>
 
   <!-- CAMPO DE DIGITAÇÃO -->
@@ -72,6 +71,14 @@
   <script>
     const chatArea = document.getElementById("chatArea");
     const inputMsg = document.getElementById("inputMsg");
+    
+    // Histórico de memória da conversa
+    const conversationHistory = [
+      {
+        role: "assistant",
+        content: "Olá, maravilhosa! Sou a Ji-woo, dermoconsultora oficial da Lumina. ✨\n\nComo posso cuidar da sua pele hoje? Se você tiver alguma queixa (como melasma, poros abertos ou linhas de expressão), me conta por aqui que eu te oriento com todo carinho!"
+      }
+    ];
 
     function appendMessage(text, isOut = false, audioUrl = null) {
       const wrapper = document.createElement("div");
@@ -82,7 +89,7 @@
       let audioHtml = "";
       if (audioUrl) {
         audioHtml = `
-          <div class="mt-2 pt-2 border-t border-white/10 flex items-center gap-2 bg-[#111b21]/60 p-2 rounded-lg">
+          <div class="mt-2 pt-2 border-t border-white/10 flex items-center gap-2 bg-[#111b21]/80 p-2 rounded-lg">
             <audio controls class="w-full h-8" src="${audioUrl}"></audio>
           </div>
           <p class="text-[10px] text-emerald-400 mt-1 flex items-center gap-1">
@@ -92,8 +99,8 @@
       }
 
       wrapper.innerHTML = `
-        <div class="max-w-[85%] rounded-2xl px-3.5 py-2 text-white text-sm shadow-md ${isOut ? 'bubble-out' : 'bubble-in'}">
-          <p class="whitespace-pre-line leading-relaxed">${text}</p>
+        <div class="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-white text-sm shadow-md leading-relaxed ${isOut ? 'bubble-out' : 'bubble-in'}">
+          <p class="whitespace-pre-line">${text}</p>
           ${audioHtml}
           <div class="text-[10px] text-right mt-1 text-neutral-400 flex items-center justify-end gap-1">
             <span>${time}</span>
@@ -110,12 +117,14 @@
       if (!text) return;
 
       appendMessage(text, true);
+      conversationHistory.push({ role: "user", content: text });
       if (!customText) inputMsg.value = "";
 
+      // Mostra digitando...
       const typingEl = document.createElement("div");
       typingEl.id = "typingIndicator";
-      typingEl.className = "flex justify-start text-xs text-neutral-400 italic px-2";
-      typingEl.innerHTML = `<span>Ji-woo está digitando...</span>`;
+      typingEl.className = "flex justify-start text-xs text-neutral-400 italic px-2 py-1 items-center gap-2";
+      typingEl.innerHTML = `<span class="inline-block w-2 h-2 bg-emerald-400 rounded-full animate-ping"></span><span>Ji-woo está digitando...</span>`;
       chatArea.appendChild(typingEl);
       chatArea.scrollTop = chatArea.scrollHeight;
 
@@ -125,7 +134,8 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             phone: "5511999999999",
-            message: text
+            message: text,
+            history: conversationHistory
           })
         });
         const data = await resp.json();
@@ -134,10 +144,11 @@
 
         if (data.reply) {
           appendMessage(data.reply, false, data.audioAttached);
+          conversationHistory.push({ role: "assistant", content: data.reply });
         }
       } catch (err) {
         document.getElementById("typingIndicator")?.remove();
-        appendMessage("Desculpe, tive uma instabilidade temporária. Pode tentar novamente? 🌸", false);
+        appendMessage("Poxa, tive uma pequena oscilação na conexão. Pode me reenviar? 🌸", false);
       }
     }
 
@@ -146,9 +157,7 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => {
-        appendMessage("Olá, maravilhosa! Sou a Ji-woo, dermoconsultora oficial da Lumina. ✨\n\nComo posso cuidar da sua pele hoje? Se você já montou sua seleção no site ou tem alguma queixa (manchas, poros, linhas), pode me mandar por aqui!", false);
-      }, 500);
+      appendMessage(conversationHistory[0].content, false);
     });
   </script>
 </body>
