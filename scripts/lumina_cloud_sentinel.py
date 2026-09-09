@@ -32,14 +32,14 @@ TELEGRAM_CHAT_ID = "856670142"
 CATALOG_KNOWLEDGE = {
     "MLB5200831909": {
         "name": "Super Combo Medicube Booster Mini Pro Plus E Pdrn",
-        "price": 1399.00,
-        "profit": 450.37,
+        "price": 1499.00,
+        "profit": 507.92,
         "highlights": "Aparelho Booster Pro + Creme PDRN Salmon DNA 55g. 790% mais absorção dérmica, efeito glass skin imediato, garantia 90 dias com suporte no Brasil."
     },
     "MLB5200870421": {
         "name": "Medicube Booster Mini Pro Plus Aparelho Facial Eletroporacao",
-        "price": 1149.00,
-        "profit": 366.67,
+        "price": 1249.00,
+        "profit": 428.47,
         "highlights": "Eletroporação e microcorrentes, melhora absorção em 790%, compatível com qualquer sérum, entrada universal USB-C, 90 dias garantia oficial."
     },
     "MLB5203216077": {
