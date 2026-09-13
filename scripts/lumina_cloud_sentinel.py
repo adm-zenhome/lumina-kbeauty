@@ -36,10 +36,22 @@ CATALOG_KNOWLEDGE = {
         "profit": 507.92,
         "highlights": "Aparelho Booster Pro + Creme PDRN Salmon DNA 55g. 790% mais absorção dérmica, efeito glass skin imediato, garantia 90 dias com suporte no Brasil."
     },
+    "MLB5226331013": {
+        "name": "Super Combo Medicube Booster Pro E Pdrn",
+        "price": 1299.00,
+        "profit": 341.77,
+        "highlights": "Aparelho Booster Pro + Creme PDRN Salmon DNA 55g. 790% mais absorção dérmica, efeito glass skin imediato, garantia 90 dias com suporte no Brasil."
+    },
     "MLB5200870421": {
         "name": "Medicube Booster Mini Pro Plus Aparelho Facial Eletroporacao",
         "price": 1249.00,
         "profit": 428.47,
+        "highlights": "Eletroporação e microcorrentes, melhora absorção em 790%, compatível com qualquer sérum, entrada universal USB-C, 90 dias garantia oficial."
+    },
+    "MLB5226312901": {
+        "name": "Medicube Age-r Booster Pro",
+        "price": 1099.00,
+        "profit": 304.07,
         "highlights": "Eletroporação e microcorrentes, melhora absorção em 790%, compatível com qualquer sérum, entrada universal USB-C, 90 dias garantia oficial."
     },
     "MLB5203216077": {
